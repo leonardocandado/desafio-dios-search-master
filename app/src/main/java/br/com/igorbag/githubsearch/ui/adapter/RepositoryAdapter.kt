@@ -7,10 +7,11 @@ import br.com.igorbag.githubsearch.databinding.RepositoryItemBinding
 import br.com.igorbag.githubsearch.domain.Repository
 import br.com.igorbag.githubsearch.ui.MainActivity
 
-class RepositoryAdapter(private val repositories: List<Repository>) :
+class RepositoryAdapter(
+    private val repositories: List<Repository>,
+    private val click : (url: String) -> Unit
+    ) :
     RecyclerView.Adapter<RepositoryAdapter.ViewHolder>() {
-
-    lateinit var btnShareLister : String
 
     // Cria uma nova view
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +30,7 @@ class RepositoryAdapter(private val repositories: List<Repository>) :
         holder.binding.apply {
             tvNameRepos.text = repository.name
             ivLink.setOnClickListener {
-                MainActivity().shareRepositoryLink(repository.htmlUrl)
+                click(repository.htmlUrl)
                 //MainActivity().openBrowser(repository.htmlUrl)
             }
         }

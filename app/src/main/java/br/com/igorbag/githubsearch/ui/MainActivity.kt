@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             saveUserLocal()
             onResume()
         }
+
     }
 
     // salvar o usuario preenchido no EditText utilizando uma SharedPreferences
@@ -107,14 +108,17 @@ class MainActivity : AppCompatActivity() {
 
     // Metodo responsavel por realizar a configuracao do adapter
     fun setupAdapter(list: List<Repository>) {
-        adapter = RepositoryAdapter(list)
+        adapter = RepositoryAdapter(
+            list
+        ) {
+            shareRepositoryLink(it)
+        }
         binding.rvListaRepositories.adapter = adapter
     }
 
-
     // Metodo responsavel por compartilhar o link do repositorio selecionado
     // @Todo 11 - Colocar esse metodo no click do share item do adapter
-    fun shareRepositoryLink(urlRepository: String) {
+    private fun shareRepositoryLink(urlRepository: String) {
         Log.d("URL", urlRepository)
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -133,7 +137,5 @@ class MainActivity : AppCompatActivity() {
                 Intent.ACTION_VIEW, Uri.parse(htmlUrl)
             )
         )
-
     }
-
 }
